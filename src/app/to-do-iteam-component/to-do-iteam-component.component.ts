@@ -9,7 +9,7 @@ import {TodosService} from '../todos.service'
   
   <div class="checkbox">
     <div class="checkbox">
-      <input type="checkbox" checked id="{{ 'checkbox'}}"/>
+      <input type="checkbox" (change)="checkValue($event)" [checked]="todo.done"/>
       <label for="checkbox"></label>
     </div>
   </div>
@@ -32,10 +32,13 @@ export class ToDoIteamComponentComponent implements OnInit {
   }
 
   deleteTask(){
-    console.log(this.todo)
     this.todoservice.deleteTask(this.todo)
-    console.log("ta");
-    
+  }
+
+  checkValue(event: any){
+    let state=event.srcElement.checked;
+    this.todo.done=state;
+    this.todo.doneCreated=Date.now();
   }
 
 }

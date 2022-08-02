@@ -17,11 +17,24 @@ import { ToDo } from './to-do';
     
     <button (click)="addTask()">Dodaj taska!</button>
   </div>
-  <a mat-list-item *ngFor="let todo of toDoService.getAllTasksName()" >
-  <mat-list>
-    <app-to-do-iteam-component>appTooltip [todoIn]="todo" </app-to-do-iteam-component>
+
+  <mat-label>Lista zadań gotowych</mat-label>
+  <mat-list role="list">
+
+    <mat-list-item role="listiteam" *ngFor="let todo of toDoService.getTasks() | todoShouldBeDone:true">
+      <app-to-do-iteam-component appTooltip [tooltipDateDone]="todo.doneCreated" [todoIn]="todo"></app-to-do-iteam-component>
+    </mat-list-item>
+
+
+  <mat-label>Lista zadań nie gotowych</mat-label>
+  <mat-list role="list">
+
+    <mat-list-item role="listiteam" *ngFor="let todo of toDoService.getTasks() | todoShouldBeDone:false">
+      <app-to-do-iteam-component appTooltip [tooltipDateDone]="todo.doneCreated" [todoIn]="todo"></app-to-do-iteam-component>
+    </mat-list-item>
+
   </mat-list>
-  </a>
+ 
   `
   
 })
@@ -38,7 +51,9 @@ export class TodoComponent implements OnInit {
     const val=this.todoInput.nativeElement.value.trim()
     if(!val) return
     this.toDoService.addToList({name:val, done: false})
-    console.log(this.toDoService.getAllTasksName())
+    //clear and focus
+    this.todoInput.nativeElement.value="";
+    this.todoInput.nativeElement.focus();
   }
 
 
