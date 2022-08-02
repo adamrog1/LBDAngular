@@ -1,49 +1,44 @@
 import { CssSelector } from '@angular/compiler';
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
 import {TodosService} from '../app/todos.service'
 import { ToDo } from './to-do';
 
 @Component({
   selector: 'app-todo',
-  styleUrls: ['./todo.component.scss'],
   template: ` 
 
   <form class="tasks-input">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Nazwa taska</mat-label>
-      <input #newTask matInput>
+      <input #todoInput matInput>
     </mat-form-field>
   </form>
   <div class="task-button">
     
-    <button (click)="addTask(newTask.value, false)">Dodaj taska!</button>
+    <button (click)="addTask()">Dodaj taska!</button>
   </div>
+  <a mat-list-item *ngFor="let todo of toDoService.getAllTasksName()" >
   <mat-list>
-    <a mat-list-item *ngFor="let task of toDoService.getTaskName(); let i=index"> 
-    <div class="container">
-    <div class="round">
-      <input type="checkbox" checked id="{{ 'checkbox'+i }}"/>
-      <label for="checkbox"></label>
-    </div>
-  </div>
-  
-    {{ task }} </a>
+    <app-to-do-iteam-component>appTooltip [todoIn]="todo" </app-to-do-iteam-component>
   </mat-list>
+  </a>
   `
   
 })
 export class TodoComponent implements OnInit {
 
 
-  constructor(public toDoService: TodosService) {
+  @ViewChild('todoInput') todoInput;
+
+  constructor(public toDoService: TodosService, todoInput: ElementRef) {
+    this.todoInput=todoInput;
    }
 
-  addTask(name: string, done: boolean){
-    const newTask: ToDo={
-      name: name,
-      done: done
-    }
-    this.toDoService.addToList(newTask)
+  addTask(){
+    const val=this.todoInput.nativeElement.value.trim()
+    if(!val) return
+    this.toDoService.addToList({name:val, done: false})
+    console.log(this.toDoService.getAllTasksName())
   }
 
 

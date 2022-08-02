@@ -8,7 +8,7 @@ import { ToDo } from './to-do';
 
 export class TodosService{
 
-  todos: ToDo[]=[];
+  todosList: ToDo[]=[];
 
   constructor() {
   }
@@ -16,14 +16,21 @@ export class TodosService{
   
   addToList(element : ToDo){
     
-    return this.todos.push(element)
+    return this.todosList.push(element)
   }
 
   public  getTasks(){
-    return this.todos
+    return this.todosList
   }
 
-  public getTaskName(){
-    return this.todos.map((task)=> task.name)
+  public getAllTasksName(){
+    return this.todosList.map((task)=> task.name)
+  }
+
+  public deleteTask(todo: ToDo){
+    let index=this.getTasks().indexOf(todo)
+    if(index!=-1) this.todosList.splice(index,1)
+
+    
   }
 }
