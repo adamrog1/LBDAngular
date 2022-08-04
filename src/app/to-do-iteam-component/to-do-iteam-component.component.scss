@@ -2,6 +2,7 @@
     display: inline-flex;
     cursor: pointer;
     position: relative;
+
 }
 
 .checkbox:checked {
@@ -84,7 +85,7 @@
   /* general styling */
   html, body {
     height: 100%;
-    margin: 0;
+    margin:auto
   }
   
   body {
@@ -100,3 +101,29 @@
   .container {
     margin: 0 auto;
   }
+
+  .gg-remove > input[type="delete"]{
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 22px;
+    height: 22px;
+    border: 2px solid;
+    border-radius: 22px
+}
+.gg-remove::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 5px;
+    top: 8px;
+    left: 4px
+}
+.mniam{
+    margin-bottom: 30px;
+}

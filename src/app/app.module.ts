@@ -12,6 +12,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { ToDoIteamComponentComponent } from './to-do-iteam-component/to-do-iteam-component.component';
 import { TooltipDirective } from './tooltip.directive';
 import { TodoDonePipe } from './todo-done.pipe';
+import { NotificationDynamicComponentComponent } from './notification-dynamic-component/notification-dynamic-component.component';
+
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { TodoDonePipe } from './todo-done.pipe';
     TodoComponent,
     ToDoIteamComponentComponent,
     TooltipDirective,
-    TodoDonePipe
+    TodoDonePipe,
+    NotificationDynamicComponentComponent,
   ],
   imports: [
     BrowserModule,
