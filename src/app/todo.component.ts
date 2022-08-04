@@ -1,7 +1,8 @@
 import { CssSelector } from '@angular/compiler';
-import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import {TodosService} from '../app/todos.service'
 import { ToDo } from './to-do';
+import { NotificationDynamicComponentService } from './notification-dynamic-component/notification-dynamic-component.service';
 
 @Component({
   selector: 'app-todo',
@@ -34,6 +35,10 @@ import { ToDo } from './to-do';
     </mat-list-item>
 
   </mat-list>
+
+  <div class="dialog-container">
+  <div #dialog></div>
+</div>
  
   `
   
@@ -42,18 +47,34 @@ export class TodoComponent implements OnInit {
 
 
   @ViewChild('todoInput') todoInput;
+  @ViewChild('dialog', {read:ViewContainerRef}) dialogEntry!:ViewContainerRef
 
-  constructor(public toDoService: TodosService, todoInput: ElementRef) {
+  constructor(public toDoService: TodosService, todoInput: ElementRef, private dialogService: NotificationDynamicComponentService ) {
     this.todoInput=todoInput;
    }
 
   addTask(){
     const val=this.todoInput.nativeElement.value.trim()
-    if(!val) return
+    if(!val){
+      this.createDialog("Nazwa nie może być pusta","e");
+      return;
+    } 
+    if(val.length<5){
+      this.createDialog("Nazwa nie moze byc mniejsza niz 5 znakow", "error");
+      return;
+    }
     this.toDoService.addToList({name:val, done: false})
     //clear and focus
     this.todoInput.nativeElement.value="";
     this.todoInput.nativeElement.focus();
+    //show notification
+    this.createDialog("Dodano nowe zadanie !", "success")
+    console.log(this.createDialog("Dodano nowe zadanie","success"));
+    
+  }
+
+  createDialog(message: string, type?: string) {
+    this.dialogService.create(this.dialogEntry, message, type);
   }
 
 
