@@ -9,6 +9,7 @@ import { TodoComponent } from './todo.component';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToDoIteamComponentComponent } from './to-do-iteam-component/to-do-iteam-component.component';
 import { TooltipDirective } from './tooltip.directive';
 import { TodoDonePipe } from './todo-done.pipe';
@@ -30,7 +31,8 @@ import { NotificationDynamicComponentComponent } from './notification-dynamic-co
     BrowserAnimationsModule,
     MatListModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
 
   ],
   providers: [],

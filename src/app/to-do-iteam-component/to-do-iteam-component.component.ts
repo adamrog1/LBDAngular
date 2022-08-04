@@ -21,18 +21,15 @@ import {TodosService} from '../todos.service'
   </span>
       <button type="button" class="material-icons" (click)="deleteTask()">delete</button>
 </div>
-<div class="dialog-container">
-  <div #dialog></div>
-</div>
 `
 })
 export class ToDoIteamComponentComponent implements OnInit {
 
   @Input("todoIn") public todo: ToDo={name: "",done: false}
   @Output("createDialog") createNotificationEvent=new EventEmitter
-  @ViewChild('dialog', {read:ViewContainerRef}) dialogEntry!:ViewContainerRef
 
-  constructor(public todoservice:TodosService, private dialogService: NotificationDynamicComponentService) {
+
+  constructor(public todoservice:TodosService) {
    }
 
   ngOnInit(): void {
@@ -48,13 +45,7 @@ export class ToDoIteamComponentComponent implements OnInit {
     this.todo.done=state;
     this.todo.doneCreated=Date.now();
     let msg = state ? "Zaznaczono '"+this.todo.name+"' jako zrobione" : "Zaznaczono '"+this.todo.name+"' jako do zrobienia";
-    this.createDialog(msg,'success')
     this.createNotificationEvent.emit({message: msg, type: 'info'});
     
-  }
-
-
-  createDialog(message: string, type?: string) {
-    this.dialogService.create(this.dialogEntry, message, type);
   }
 }

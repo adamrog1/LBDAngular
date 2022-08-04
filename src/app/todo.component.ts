@@ -3,6 +3,8 @@ import { Component, ElementRef, OnInit, Output, ViewChild, ViewContainerRef } fr
 import {TodosService} from '../app/todos.service'
 import { ToDo } from './to-do';
 import { NotificationDynamicComponentService } from './notification-dynamic-component/notification-dynamic-component.service';
+import {MAT_SNACK_BAR_DATA} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-todo',
@@ -22,8 +24,8 @@ import { NotificationDynamicComponentService } from './notification-dynamic-comp
   <mat-label>Lista zadań gotowych</mat-label>
   <mat-list role="list">
 
-    <mat-list-item role="listiteam" *ngFor="let todo of toDoService.getTasks() | todoShouldBeDone:true">
-      <app-to-do-iteam-component appTooltip [tooltipDateDone]="todo.doneCreated" [todoIn]="todo"></app-to-do-iteam-component>
+    <mat-list-item role="listiteam" *ngFor="let todo of toDoService.getTasks() | todoShouldBeDone:true" >
+      <app-to-do-iteam-component appTooltip [tooltipDateDone]="todo.doneCreated" [todoIn]="todo" (createDialog)="createDialog($event.message, $event.type)"></app-to-do-iteam-component>
     </mat-list-item>
 
 
@@ -31,14 +33,14 @@ import { NotificationDynamicComponentService } from './notification-dynamic-comp
   <mat-list role="list">
 
     <mat-list-item role="listiteam" *ngFor="let todo of toDoService.getTasks() | todoShouldBeDone:false">
-      <app-to-do-iteam-component appTooltip [tooltipDateDone]="todo.doneCreated" [todoIn]="todo"></app-to-do-iteam-component>
+      <app-to-do-iteam-component appTooltip [tooltipDateDone]="todo.doneCreated" [todoIn]="todo" (createDialog)="createDialog($event.message, $event.type)"></app-to-do-iteam-component>
     </mat-list-item>
 
   </mat-list>
 
-  <div class="dialog-container">
+  <!-- <div class="snackbar">
   <div #dialog></div>
-</div>
+</div> -->
  
   `
   
@@ -69,8 +71,6 @@ export class TodoComponent implements OnInit {
     this.todoInput.nativeElement.focus();
     //show notification
     this.createDialog("Dodano nowe zadanie !", "success")
-    console.log(this.createDialog("Dodano nowe zadanie","success"));
-    
   }
 
   createDialog(message: string, type?: string) {
